@@ -9,7 +9,7 @@ Go language compiler (you can get it from [the website](golang.org)). The instal
 You can choose from two options:
 
 1. Reading the input from a file -- run the program with the file name as a parameter
-2. (_Is broken as for now_) Inputting the data manually from stdin. If so, do not pass any parameters via command line
+2. Inputting the data manually from stdin. If so, do not pass any parameters via command line. After entering all constraints and target function press `Ctrl+D` -- to close the stdin and start solving the problem
 
 ## Input example
 

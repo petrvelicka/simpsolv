@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strings"
+	"bufio"
 
 	"github.com/petrvelicka/simpsolv/parse"
 	"github.com/petrvelicka/simpsolv/solver"
@@ -17,6 +18,16 @@ func read_input(fname string) string {
 		os.Exit(-2)
 	}
 	return string(data)
+}
+
+func read_input_stdin() string {
+	var data = ""
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		data += scanner.Text() + "\n"
+	}
+
+	return data
 }
 
 func output_roots(problem *solver.LPProblem) {
@@ -39,15 +50,14 @@ func main() {
 
 	if len(args) > 1 {
 		lines = strings.Split(read_input(args[1]), "\n")
-
-		// remove the last pointless line
-		lines = lines[:len(lines)-1]
-
 	} else {
-		fmt.Println("not implemented")
-		// TODO: add ability to input data from stdin
-		return
+		lines = strings.Split(read_input_stdin(), "\n")
 	}
+	
+	// remove the last pointless line
+	lines = lines[:len(lines)-1]
+
+
 	var problem solver.LPProblem
 	for _, line := range lines {
 		parse.ParseLine(line, &problem)
