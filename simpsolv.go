@@ -41,7 +41,7 @@ func output_roots(problem *solver.LPProblem) {
 	for i, _ := range (*problem).Roots {
 		fmt.Printf("%s\t | %d\n", (*problem).Variables[i], (*problem).Roots[i])
 	}
-
+	fmt.Println("Object function value for that variables:", (*problem).ObjectValue)
 }
 
 func main() {
@@ -63,7 +63,11 @@ func main() {
 		parse.ParseLine(line, &problem)
 	}
 
-	solver.Solve(&problem)
-	fmt.Println("Solutions: ")
-	output_roots(&problem)
+	_, err := solver.Solve(&problem)
+	if err == nil {
+		fmt.Println("Solution: ")
+		output_roots(&problem)
+	} else {
+		fmt.Println("The system wasn't solved, the optimal solution doesn't exist")
+	}
 }

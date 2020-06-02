@@ -17,6 +17,7 @@ type LPProblem struct {
 	Constraints []string
 	Roots []int
 	Program []string
+	ObjectValue int
 }
 
 func gen_var(name string) string {
@@ -42,6 +43,10 @@ func gen_var_output(name string) string {
 	return "printf \"SOLVER VAR " + name + " %d\\n\", "+ name + ";"
 }
 
+func gen_obj_value_output(name string) string {
+	return "printf \"SOLVER OBJ: %d\\n\", " + name + ";"
+}
+
 func Generate_program(problem *LPProblem) []string {
 	var program = []string {}
 	// variables
@@ -61,6 +66,8 @@ func Generate_program(problem *LPProblem) []string {
 	for _, val := range (*problem).Variables {
 		program = append(program, gen_var_output(val))
 	}
+
+	program = append(program, gen_obj_value_output((*problem).Object))
 
 	program = append(program, "end;")
 	return program
@@ -104,7 +111,12 @@ func Run_glpsol(problem *LPProblem) ([]int, error) {
 			root, _ := strconv.Atoi(strings.Split(m, " ")[3])
 			Roots = append(Roots, root)
 		}
+		if solved && m[:10] == "SOLVER OBJ" {
+			objvalue, _ := strconv.Atoi(strings.Split(m, " ")[2])
+			(*problem).ObjectValue = objvalue
+		}
 	}
+	(*problem).Roots = Roots
 	if (!solved) {
 		return Roots, errors.New("not solved")
 	} else {
@@ -115,7 +127,6 @@ func Run_glpsol(problem *LPProblem) ([]int, error) {
 func Solve(problem *LPProblem) ([]int, error) {
 	(*problem).Program = Generate_program(problem)
 	Check_glpsol()
-	Roots, err := Run_glpsol(problem)
-	(*problem).Roots = Roots
+	_, err := Run_glpsol(problem)
 	return (*problem).Roots, err
 }
