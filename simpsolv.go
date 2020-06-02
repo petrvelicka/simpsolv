@@ -14,8 +14,23 @@ func read_input(fname string) string {
 	data, err := ioutil.ReadFile(fname)
 	if err != nil {
 		fmt.Println("File reading error", err)
+		os.Exit(-2)
 	}
 	return string(data)
+}
+
+func output_roots(problem *solver.LPProblem) {
+	if (*problem).Roots == nil {
+			fmt.Fprintln(os.Stderr, "ERROR: SOLVE THE PROBLEM FIRST")
+			return
+	}
+	fmt.Println("VarName\t | Value")
+	fmt.Println("-----------------")
+
+	for i, _ := range (*problem).Roots {
+		fmt.Printf("%s\t | %d\n", (*problem).Variables[i], (*problem).Roots[i])
+	}
+
 }
 
 func main() {
@@ -38,8 +53,7 @@ func main() {
 		parse.ParseLine(line, &problem)
 	}
 
-	fmt.Println(problem.Variables)
-	fmt.Println(problem.Object)
-	fmt.Println(problem.Minmax)
-	fmt.Println(problem.Constraints)
+	solver.Solve(&problem)
+	fmt.Println("Solutions: ")
+	output_roots(&problem)
 }

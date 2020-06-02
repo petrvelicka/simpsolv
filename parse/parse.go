@@ -8,7 +8,7 @@ import (
 )
 
 func check_word(word string) bool {
-	operators := []string {"<=", "=", ">=", "min", "max", "+", "-"}
+	operators := []string {"<=", "=", ">=", "min", "max", "+", "-", "*"}
 	if exists(operators, word) {
 		return false
 	}
