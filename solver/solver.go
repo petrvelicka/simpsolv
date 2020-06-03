@@ -3,7 +3,6 @@ package solver
 import (
 	"fmt"
 	"strconv"
-	"os"
 	"os/exec"
 	"strings"
 	"bufio"
@@ -101,7 +100,7 @@ func Run_glpsol(problem *LPProblem) ([]int, error) {
 func Solve(problem *LPProblem) ([]int, error) {
 	(*problem).Program = Generate_program(problem)
 	if !Check_glpsol() {
-		os.Exit(-2)
+		return (*problem).Roots, errors.New("glpsol not found")
 	}
 	_, err := Run_glpsol(problem)
 	return (*problem).Roots, err
