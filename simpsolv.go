@@ -33,6 +33,8 @@ func main() {
 		fmt.Println("Solution: ")
 		output_roots(&problem)
 	} else {
+		fmt.Fprint(os.Stderr, "Error: ")
+		fmt.Fprintln(os.Stderr, err)
 		fmt.Fprintln(os.Stderr, "The system wasn't solved, the optimal solution doesn't exist")
 	}
 }
