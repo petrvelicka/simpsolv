@@ -7,23 +7,6 @@ import (
 		"github.com/petrvelicka/simpsolv/solver"
 )
 
-func check_word(word string) bool {
-	operators := []string {"<=", "=", ">=", "min", "max", "+", "-", "*"}
-	if exists(operators, word) {
-		return false
-	}
-	return true
-}
-
-func exists(vars []string, value string) bool {
-	for _, val := range vars {
-		if value == val {
-			return true
-		}
-	}
-	return false
-}
-
 func ParseLine(line string, problem *solver.LPProblem) {
 	// check if the line is object function
 	lexems := strings.Split(line, " ")

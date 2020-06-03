@@ -1,5 +1,7 @@
 package solver
 
+import "strconv"
+
 func gen_var(name string) string {
 	return "var " + name + " >= 0, integer;"
 }
