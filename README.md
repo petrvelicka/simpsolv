@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Go language compiler (you can get it from [the website](golang.org)). The installation is straightforward, just install like any other go package.
+Go language compiler (you can get it from [the website](https://golang.org/)). The installation is straightforward, just install like any other go package.
 
 ## Running
 
